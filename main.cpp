@@ -12,7 +12,7 @@ int main()
 
     BigNumber number5 = BigNumber("67039039649712985497870124991029230637396829102961966888617807218608867039039649712985497870124991029230637396829102961966888617807218608820150367734884009371490834517138450159290932430254268769414059732849733402479264666532015036773488400937149083451713845015929093243025426876941405973284973216824503042159");
     BigNumber number6 = BigNumber("67039039649712985497870124991029236703903964971298549787012499102923063739682910296196688861780721860882015036773488400937149083451713845015929093243025426876941405973284973340247926466653063739682910296196688861780721860882015036773488400937149083451713845015929093243025426876941405973284973340247926466653");
-    BigNumber number7 = BigNumber("70390396497129854978701249910292306373968291029619668886");
+    BigNumber number7 = BigNumber("7039039649712985497870126");
 
     cout << "number1 = " << number1.getString() << endl;
     cout << "number2 = " << number2.getString() << endl;
@@ -22,7 +22,12 @@ int main()
     cout << "number3 - number4 = " << (number3 - number4).getString() << endl;
 
     cout << "number1 * number2 = " << (number1 * number2).getString() << endl;
+    const clock_t begin_time = clock();
     cout << "number5 + number6 mod number7 = " << (number5.addMod(number6, number7)).getString() << endl;
+    cout << "Time Taken : " << float(clock() - begin_time) / CLOCKS_PER_SEC << " s" << endl;
+    const clock_t begin_time2 = clock();
     cout << "number5 - number6 mod number7 = " << (number5.sousMod(number6, number7)).getString() << endl;
+    cout << "Time Taken : " << float(clock() - begin_time2) / CLOCKS_PER_SEC << " s" << endl;
+
     return 0;
 }

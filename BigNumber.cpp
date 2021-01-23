@@ -22,21 +22,17 @@ BigNumber::BigNumber(string number)
     string s1{c1};
     if (number.substr(0, 1) == s1)
     {
-        // cout << "-----------------" << endl;
-
         numberInString = number.substr(1);
         sign = -1;
     }
     else
     {
-        // cout << "+++++++++++++++++" << endl;
         numberInString = number;
         sign = 1;
     }
 
     if (numberInString.size() > 0 && numberInString[0] == '0')
     {
-        // cout << numberInString + "1" << endl;
         numberInString = numberInString + "1";
         numberInString = numberInString.substr(numberInString.find_first_not_of("0"));
         if (numberInString == "1")
@@ -143,7 +139,6 @@ BigNumber BigNumber::add(BigNumber other)
     int signOfBiggest = 1;
     if (biggestNumber.sign != smallestNumber.sign)
         signOfSmallest = -1;
-    // cout << biggestNumber.numberInString.size() << " + " << smallestNumber.numberInString.size() << endl;
 
     while (biggestNumber.numberInString.size() != smallestNumber.numberInString.size())
     {
@@ -151,23 +146,13 @@ BigNumber BigNumber::add(BigNumber other)
     }
 
     int carry = 0;
-    // cout << biggestNumber.numberInString << " + " << smallestNumber.numberInString << endl;
     for (int i = int(biggestNumber.numberInString.size() - 1); i >= 0; i--)
     {
         int sumOfOneIter = (biggestNumber.numberInString[i] - '0') + signOfSmallest * (smallestNumber.numberInString[i] - '0') + carry;
-        // cout << biggestNumber.sign << " *" << biggestNumber.numberInString[i] << " + " << smallestNumber.sign << " *" << smallestNumber.numberInString[i] << " + " << carry << " = " << sumOfOneIter << endl;
         carry = 0;
         if (i == 0)
         {
-            // if (sumOfOneIter < 0)
-            // {
-            //     sum.insert(0, std::to_string(-sumOfOneIter));
-            //     signOfSum = -1;
-            // }
-            // else
-            // {
             sum.insert(0, std::to_string(sumOfOneIter));
-            // }
         }
         else if (sumOfOneIter < 0)
         {
@@ -244,7 +229,6 @@ BigNumber BigNumber::multiply(BigNumber other)
         for (int k = int(biggestNumber.numberInString.size() - 1); k >= 0; k--)
         {
             int sumOfOneIter = (biggestNumber.numberInString[k] - '0') * multiplier + carry;
-            // cout << biggestNumber.numberInString[k] << " * " << multiplier << " + " << carry << " = " << sumOfOneIter << endl;
             carry = 0;
             if (sumOfOneIter <= 9 || k == 0)
             {
@@ -261,11 +245,9 @@ BigNumber BigNumber::multiply(BigNumber other)
         {
             resultForOneIter.append("0");
         }
-        // cout << resultForOneIter << endl;
         BigNumber toBeAdded = BigNumber(resultForOneIter);
         prod = prod + toBeAdded;
 
-        // cout << "Result : " << prod.getString() << endl;
         j++;
     }
     if (biggestNumber.sign * smallestNumber.sign == -1)
@@ -292,14 +274,11 @@ BigNumber BigNumber::addMod(const BigNumber &other, BigNumber &modNum)
     while (sizeDiff >= 0)
     {
         BigNumber newMod = modNum.shift(sizeDiff);
-        // cout << "New Mod : " << newMod.getString() << ", new Sum : " << sum.getString() << ", SizeDiff : " << sizeDiff << endl;
-
         while (sum >= newMod || sum.sign == -1)
         {
             sum = sum - signOfSum * newMod;
         }
         sizeDiff = sum.size() - modNum.size() - 1;
-        // cout << "New Mod : " << newMod.getString() << ", new Sum : " << sum.getString() << ", SizeDiff : " << sizeDiff << endl;
     }
 
     return sum;
@@ -314,23 +293,12 @@ BigNumber BigNumber::sousMod(const BigNumber &other, BigNumber &modNum)
     {
         BigNumber newMod = modNum.shift(sizeDiff);
         signOfSum = sum.getSign();
-        // cout << "New Mod : " << newMod.getString() << ", new Sum : " << sum.getString() << ", SizeDiff : " << sizeDiff << endl;
-
         while (sum >= newMod || (sum < newMod && sum.sign == -1))
         {
             sum = sum - signOfSum * newMod;
-            // cout << "intermediate Sum : " << sum.getString() << endl;
         }
         sizeDiff = sum.size() - modNum.size() - 1;
-        // cout << "New Mod : " << newMod.getString() << ", new Sum : " << sum.getString() << ", SizeDiff : " << sizeDiff << endl;
     }
 
     return sum;
 }
-
-// BigNumber BigNumber::multiMod(const BigNumber &other, BigNumber &modNum)
-// {
-//     BigNumber sum;
-
-//     return sum;
-// }
