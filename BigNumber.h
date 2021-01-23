@@ -9,7 +9,7 @@ class BigNumber
 {
 private:
     string numberInString;
-    bool sign = false;
+    int sign = 1;
 
 public:
     BigNumber();
@@ -17,14 +17,29 @@ public:
     BigNumber(int number);
     ~BigNumber();
 
-    string getString() { return numberInString; };
+    string getString()
+    {
+        if (sign == -1)
+            return "-" + numberInString;
+        else
+            return numberInString;
+    };
     BigNumber add(BigNumber other);
     BigNumber sous(BigNumber other);
     BigNumber multiply(BigNumber other);
+    BigNumber shift(int numberOfZeros);
 
     bool equals(const BigNumber &other);
-    BigNumber addMod(const BigNumber &other, const BigNumber &modNumber);
-
+    int getSign() { return sign; };
+    BigNumber addMod(const BigNumber &other, BigNumber &modNumber);
+    BigNumber sousMod(const BigNumber &other, BigNumber &modNumber);
+    BigNumber multiMod(const BigNumber &other, BigNumber &modNumber);
+    BigNumber inverteSign()
+    {
+        this->sign = -this->sign;
+        return *this;
+    };
+    int size() { return numberInString.size(); };
     friend bool operator==(BigNumber first, const BigNumber &other);
     friend bool operator>(BigNumber first, const BigNumber &other);
     friend bool operator<(BigNumber first, const BigNumber &other);
@@ -33,5 +48,6 @@ public:
     friend BigNumber operator+(BigNumber first, const BigNumber &other);
     friend BigNumber operator-(BigNumber first, const BigNumber &other);
     friend BigNumber operator*(BigNumber first, const BigNumber &other);
+    friend BigNumber operator*(int first, const BigNumber &other);
     BigNumber &operator=(const BigNumber &other);
 };
